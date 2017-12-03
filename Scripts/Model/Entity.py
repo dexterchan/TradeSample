@@ -7,7 +7,7 @@ clientName=list(range(0,100))
 from enum import Enum
 
 CompanyNameList=["Wayne Industries", "Stark Industries","Umbrella Corp","Acme Corp","Beacon Street Pizza","Monster Corp","Oceanic Airlines","Roxxon"]
-CompanyTypeList=["tech","tech","tech","tech","restaurant","energy","airline","energy"]
+CompanyTypeList=["tech","tech","tech","tech","food","energy","airline","energy"]
 
 GovNameList = ["Gotham","Tatooine","Coruscant","Naboo","First Order","New Republic"]
 
