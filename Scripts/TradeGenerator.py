@@ -15,6 +15,7 @@ class TradeGenerator():
         self.customerList=[]
         self.tradeList=[]
 
+
         self.prepareEquity()
         self.prepareCorpBond()
         self.prepareGovBond()
@@ -36,7 +37,7 @@ class TradeGenerator():
 
         return decision
 
-    def createTrade(self, custName,sec):
+    def createTrade(self, custName,sec,day):
         t = Trade()
         t.tradeId=str(uuid.uuid4())
         t.cust=custName
@@ -44,10 +45,10 @@ class TradeGenerator():
         t.quantity = np.random.randint(1000000,10000000)
         t.price = np.random.randint(90,120)
         t.orgType = sec.type
-
+        t.day=day
         return t
 
-    def prepareTradeList(self,numOfTradesPerCust):
+    def prepareTradeList(self,tradingdays):
         for c in self.customerList:
             govcorpbias = np.random.randint(0,1)
             eqBondbias = np.random.randint(0,1)
@@ -55,20 +56,20 @@ class TradeGenerator():
             lastGovBond=-1
             lastCorp = -1
 
-            for round in range(0,numOfTradesPerCust):
+            for round in range(0,tradingdays):
                 choosegovcorp = self.biasDecision(govcorpbias,2,2)
                 if(choosegovcorp==0):
                     decision=self.biasDecision(lastGovBond,len(self.govBondList),2)
-                    t =self.createTrade(c.name,self.govBondList[decision])
+                    t =self.createTrade(c.name,self.govBondList[decision],round)
                     lastGovBond = decision
                 else:
                     chooseEqBond = self.biasDecision(eqBondbias,2,5)
                     decision=self.biasDecision(lastCorp,len(CompanyNameList),5)
                     if(chooseEqBond ==0):
                         #choose equity
-                        t = self.createTrade(c.name, self.equityList[decision])
+                        t = self.createTrade(c.name, self.equityList[decision],round)
                     else:
-                        t = self.createTrade(c.name,self.corpBondList[decision])
+                        t = self.createTrade(c.name,self.corpBondList[decision],round)
                     lastCorp = decision
 
                 self.tradeList.append(t)

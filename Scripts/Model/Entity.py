@@ -46,6 +46,6 @@ class Trade():
         self.quantity=0
         self.price=0
         self.orgType=None
-
+        self.day=0
         pass
 
